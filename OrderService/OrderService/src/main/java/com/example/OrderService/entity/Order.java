@@ -1,9 +1,6 @@
 package com.example.OrderService.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -26,6 +23,10 @@ public class Order {
     private Instant orderDate;
     @Column(name = "STATUS")
     private String orderStatus;
+
     @Column(name = "TOTAL_AMOUNT")
     private long amount;
+
+
+
 }

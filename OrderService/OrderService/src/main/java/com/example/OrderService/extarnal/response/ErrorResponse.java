@@ -1,4 +1,4 @@
-package com.example.ProductService.model;
+package com.example.OrderService.extarnal.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

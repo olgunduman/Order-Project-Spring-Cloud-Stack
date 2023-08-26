@@ -1,20 +1,20 @@
-package com.example.ProductService.exception;
+package com.example.OrderService.exception;
 
-import com.example.ProductService.model.ErrorResponse;
+import com.example.OrderService.extarnal.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class RestResponseEntityExceptionHandler {
+public class GeneralExceptionHandler {
 
-    @ExceptionHandler(value = ProductServiceCustomException.class)
-    public ResponseEntity<ErrorResponse> handleProductServiceException(ProductServiceCustomException exception){
+    @ExceptionHandler(value = CustomException.class)
+    public ResponseEntity<ErrorResponse> handleCustomException(CustomException exception){
         return new ResponseEntity<>(new ErrorResponse().builder()
                 .message(exception.getMessage())
                 .errorCode(exception.getErrorCode())
-                .build(), HttpStatus.NOT_FOUND);
+                .build(), HttpStatus.valueOf(exception.getStatus()));
 
 
     }

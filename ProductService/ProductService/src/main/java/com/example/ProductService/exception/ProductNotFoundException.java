@@ -3,11 +3,10 @@ package com.example.ProductService.exception;
 import lombok.Data;
 
 @Data
-public class ProductServiceCustomException extends RuntimeException{
-
+public class ProductNotFoundException extends RuntimeException{
     private String errorCode;
 
-    public ProductServiceCustomException(String message,String errorCode){
+    public ProductNotFoundException(String message,String errorCode){
         super(message);
         this.errorCode = errorCode;
     }
