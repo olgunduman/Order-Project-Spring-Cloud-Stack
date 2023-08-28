@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService{
         ResponseEntity<Long> productAmount = productService.getProductAmount(orderRequest.getProductId());
 
         long totalAmount = productAmount.getBody() * orderRequest.getQuantity();
-        
+
 
         log.info("Creating Order With Status CREATED");
         Order order =  new Order();
