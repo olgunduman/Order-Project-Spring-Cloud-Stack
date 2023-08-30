@@ -16,9 +16,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import javax.transaction.Transactional;
+
 import java.time.Instant;
 
 @Service
@@ -34,9 +36,7 @@ public class OrderServiceImpl implements OrderService{
     private final RestTemplate restTemplate;
 
 
-
     @Override
-    @Transactional
     public long placeOrder(OrderRequest orderRequest) {
 
         // Order Entity - > Save the database with status Order Created
@@ -63,26 +63,27 @@ public class OrderServiceImpl implements OrderService{
         log.info("Calling Payment Service to completed the payment");
         PaymentRequest paymentRequest =
                 PaymentRequest.builder()
-                   .orderId(order.getId())
-                   .paymentMode(orderRequest.getPaymentMode())
-                   .amount(totalAmount)
-                   .build();
+                        .orderId(order.getId())
+                        .paymentMode(orderRequest.getPaymentMode())
+                        .amount(totalAmount)
+                        .build();
 
-        String orderStatus =null;
+        String orderStatus = null;
         try {
+            log.info("Calling Payment Service to completed the payment");
             paymentService.doPayment(paymentRequest);
-            log.info("Payment done successfully Changing the Order Status PLACED");
-            orderStatus ="PLACED";
-        }catch(Exception e) {
-            log.info("Error occured in paymnet. Order Status FAILED");
-            orderStatus ="PAYMENT_FAILED";
+            orderStatus = "PLACED";
+
+        }catch (Exception e){
+            log.error("Error while calling payment service to complete the payment");
+            orderStatus = "PAYMENT_FAILED";
+            throw e;
         }
-        order.setOrderStatus(orderStatus);
-
-        orderRepository.save(order);
-
+        finally {
+            order.setOrderStatus(orderStatus);
+            orderRepository.save(order);
+        }
         log.info("Order Place Successfully with Order Id {}",order);
-
         return order.getId();
 
     }

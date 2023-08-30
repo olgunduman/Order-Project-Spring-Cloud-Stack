@@ -4,7 +4,7 @@ import com.example.OrderService.model.OrderRequest;
 import com.example.OrderService.model.OrderResponse;
 
 public interface OrderService {
-    long placeOrder(OrderRequest orderRequest);
+    long placeOrder(OrderRequest orderRequest) throws Exception;
 
     OrderResponse getOrderDetails(long orderId);
 }

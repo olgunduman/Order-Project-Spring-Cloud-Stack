@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class PaymentRequest {
 
     private long orderId;

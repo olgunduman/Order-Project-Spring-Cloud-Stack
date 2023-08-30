@@ -21,3 +21,16 @@ spring:
     name: ORDER-SERVICE
   config:
     import: configserver:http://localhost:9296
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      external:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10

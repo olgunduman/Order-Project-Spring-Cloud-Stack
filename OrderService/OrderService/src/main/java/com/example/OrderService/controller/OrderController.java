@@ -19,7 +19,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/placeOrder")
-    public ResponseEntity<Long> placeOrder(@RequestBody OrderRequest orderRequest){
+    public ResponseEntity<Long> placeOrder(@RequestBody OrderRequest orderRequest) throws Exception{
         long orderId = orderService.placeOrder(orderRequest);
         log.info("Order Id {}", orderId);
         return new ResponseEntity<>(orderId,HttpStatus.OK);

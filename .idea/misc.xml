@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/OrderService/OrderService/pom.xml" />
         <option value="$PROJECT_DIR$/ConfigServer/ConfigServer/pom.xml" />
         <option value="$PROJECT_DIR$/PaymentService/PaymentService/pom.xml" />
+        <option value="$PROJECT_DIR$/CloudGateway/pom.xml" />
       </list>
     </option>
   </component>

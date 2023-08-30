@@ -10,7 +10,7 @@ public class GeneralExceptionHandler {
 
     @ExceptionHandler(value = CustomException.class)
     public ResponseEntity<ErrorResponse> handleCustomException(CustomException exception){
-        return new ResponseEntity<>(new ErrorResponse().builder()
+        return new ResponseEntity<>(ErrorResponse.builder()
                 .message(exception.getMessage())
                 .errorCode(exception.getErrorCode())
                 .build(), HttpStatus.valueOf(exception.getStatus()));
