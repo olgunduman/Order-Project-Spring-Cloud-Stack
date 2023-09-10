@@ -85,17 +85,20 @@ class OrderServiceImplTest {
         //ACTUAL
         CustomException exception = assertThrows(CustomException.class,()-> orderService.getOrderDetails(1));
 
+        //VERIFACTION
+        verify(orderRepository,times(1)).findById(anyLong());
+
         //ASSERT
         assertEquals("NOT_FOUND",exception.getErrorCode());
         assertEquals(404,exception.getStatus());
 
-        //VERIFACTION
-        verify(orderRepository,times(1)).findById(anyLong());
+
     }
 
     @Test
     void test_when_Order_Service_PlaceOrder_Success() throws Exception {
-
+        Order order = getMockOrder();
+        OrderRequest orderRequest = getMockOrderRequest();
         //MOCK
         when(productService.reduceQuantity(anyLong(),anyLong())).
                 thenReturn(new ResponseEntity<Void>(HttpStatus.OK));
@@ -103,15 +106,12 @@ class OrderServiceImplTest {
         when(productService.getProductAmount(anyLong()))
                 .thenReturn(new ResponseEntity<Long>(100L,HttpStatus.OK));
 
-        Order order = getMockOrder();
         when(orderRepository.save(any(Order.class))).thenReturn(order);
 
         when(paymentService.doPayment(any(PaymentRequest.class))).
                 thenReturn(new  ResponseEntity<Long>(1L,HttpStatus.OK));
 
         //ACTUAL
-        OrderRequest orderRequest = getMockOrderRequest();
-
         long orderId = orderService.placeOrder(orderRequest);
 
         //VERIFACTION
@@ -125,6 +125,41 @@ class OrderServiceImplTest {
 
     }
 
+    @DisplayName("Place Order - Payment Failed Scenario")
+    @Test
+    void test_when_Order_Service_Place_Order_Payment_Fails() throws Exception {
+
+        Order order = getMockOrder();
+        OrderRequest orderRequest = getMockOrderRequest();
+        //MOCK
+        when(orderRepository.save(any(Order.class)))
+                .thenReturn(order);
+        when(productService.reduceQuantity(anyLong(),anyLong()))
+                .thenReturn(new ResponseEntity<Void>(HttpStatus.OK));
+
+        when(productService.getProductAmount(anyLong()))
+                .thenReturn(new ResponseEntity<Long>(100L,HttpStatus.OK));
+        when(paymentService.doPayment(any(PaymentRequest.class)))
+                .thenThrow(new RuntimeException());
+
+
+        //ACTUAL
+        var exception = assertThrows(RuntimeException.class,()-> orderService.placeOrder(orderRequest));
+
+        //VERIFACTION
+        verify(orderRepository, times(2))
+                .save(any());
+        verify(productService, times(1))
+                .reduceQuantity(anyLong(),anyLong());
+        verify(productService,times(1)).getProductAmount(anyLong());
+        verify(paymentService, times(1))
+                .doPayment(any(PaymentRequest.class));
+
+        //ASSERT
+        assertEquals("java.lang.RuntimeException",exception.getClass().getName());
+
+
+    }
     private OrderRequest getMockOrderRequest() {
         return OrderRequest.builder()
                 .productId(1)

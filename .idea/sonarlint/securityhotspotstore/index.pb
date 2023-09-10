@@ -79,8 +79,6 @@ ePaymentService/PaymentService/src/main/java/com/example/PaymentService/PaymentS
 bProductService/ProductService/src/main/java/com/example/ProductService/service/ProductService.java,d\3\d3b273b08210fdcf938e5283c4977529cf1f1bb1
 ¢
 rOrderService/OrderService/src/main/java/com/example/OrderService/extarnal/interceptor/OAuthRequestInterceptor.java,3\e\3e4977cc25427319174857f7da92fb16ee1518f2
-ê
-`OrderService/OrderService/src/main/java/com/example/OrderService/seucrity/WebSecurityConfig.java,a\b\abb1c617d815493e3badfafa4385c35dbb85d566
 ç
 ]OrderService/OrderService/src/main/java/com/example/OrderService/OrderServiceApplication.java,c\c\ccf493005e11755c644970b42703c1d5c25993e3
 ç
@@ -111,8 +109,6 @@ gOrderService/OrderService/src/main/java/com/example/OrderService/extarnal/respo
 ROrderService/OrderService/src/main/java/com/example/OrderService/entity/Order.java,6\e\6e619579222183c7c5ad2373717168d30895cdbb
 í
 bOrderService/OrderService/src/test/java/com/example/OrderService/OrderServiceApplicationTests.java,2\1\219f91ead50212dd08464cc9e25801bf4852389d
-ä
-ZOrderService/OrderService/src/main/java/com/example/OrderService/service/OrderService.java,d\3\d37d92b99daf160696222157aefd13a56cc939bc
 ñ
 fProductService/ProductService/src/main/java/com/example/ProductService/service/ProductServiceImpl.java,7\7\77cee53542e6a23a3b5838c42739bae499e84fd2
 è
